@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MPUV2 - Home</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<nav class="navbar">
+  <a href="index.html">Home</a>
+  <a href="games.html">Games</a>
+  <a href="proxy.html">Proxy</a>
+  <a href="movies.html">Movies</a>
+  <a href="ai.html">AI</a>
+  <a href="settings.html">Settings</a>
+  <a href="credits.html">Credits</a>
+  <a href="hacks.html">Hacks</a>
+</nav>
+
+<div class="container">
+  <h1>MPUV2</h1>
+  <p>This is Version 2 of Mr. Prince Unblocked — fully rebuilt with new features and pages!</p>
+  <a class="button" href="games.html">Explore Games</a>
+</div>
+
+<script src="js/stars.js"></script>
+</body>
+</html>
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  background: radial-gradient(ellipse at bottom, #0a0a1a 0%, #000000 100%);
+}
+
+canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 15px;
+  background: rgba(0,0,0,0.7);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+  color: #00c0ff;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+h1 { font-size: 70px; text-shadow: 0 0 20px #4b8bff; margin-bottom: 10px; }
+p { font-size: 20px; max-width: 600px; line-height: 1.6; color: #ccc; }
+.button {
+  display: inline-block;
+  padding: 12px 30px;
+  margin-top: 20px;
+  background: #0099FF;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.2s;
+}
+.button:hover { background: #00c0ff; }
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+let stars = [];
+const STAR_COUNT = 200;
+let mouse = { x: 0, y: 0 };
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+for (let i=0;i<STAR_COUNT;i++){
+  stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,size:Math.random()*2,speed:Math.random()*0.5+0.2});
+}
+
+window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let star of stars){
+    const dx = star.x - mouse.x;
+    const dy = star.y - mouse.y;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    if(dist < 120){ star.x += dx/dist*2; star.y += dy/dist*2; }
+    star.y += star.speed;
+    if(star.y > canvas.height) star.y = 0;
+    ctx.fillStyle = "white";
+    ctx.fillRect(star.x, star.y, star.size, star.size);
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+// This file is ready for AI chat integration.
+// Currently just a placeholder for your AI page
+console.log("MPUV2 AI ready for backend connection.");
